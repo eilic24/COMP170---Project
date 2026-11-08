@@ -39,6 +39,7 @@ def play(secret_word: str) -> None:
 #While the mistakes are less than 6, call display() with the current game and get a new guess()
 #If the guess is one letter, add it to the guessed_letters and check if it appears in the secret_word, otherwise add it to the guessed words and see if it equals the secret_word
 #If the guess is correct show the correct guess letter/where/and the message correct, otheriwse increase the mistake by 1 and add to the guessed, diaplay the incorrect guess message
+#If the guess if a whole word, add it to guessed_words. If the guess == secret_word, display the correct word message exit the loop, otherwise display incorrect word message and exit loop. 
 #If check_win() is True then exit the loop
 #Class display() with reveal_word = True and if check_win() is True then say you win, otherwise display a you lose and the correct secret_word
         pass
