@@ -13,5 +13,5 @@ sen by player 1"""
 
 def two_player() -> None:
         """Use the player 1 play style, no parameter, no returns"""
-#Get the secret word using the word_to_guess() and tell player 2 to begin guessing, call play_game(secret_word)
+#Get the secret word using the word_to_guess() and tell player 2 to begin guessing, call play(secret_word)
         pass
