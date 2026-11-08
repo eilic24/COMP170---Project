@@ -15,7 +15,8 @@ def instructions() -> None:
 def mode_menu() -> tuple[int, str]:
         """Gives option for difficulty and player mode, no parameters, returns game mode (1 or 2) and difficulty ("easy" or "normal")"""
 #Repeat until valid mode is entered (1: single player, 2: two-player), if valid store as integer and exit loop, otherwise display error
-#Repeat until valid difficulty is entered (easy ornormal),remove spaces/convert to lowercase and if valid store and exit loop, otherwise display error
+#If mode is 1, Repeat until valid difficulty is entered (easy ornormal),  remove spaces/convert to lowercase and if valid store and exit loop, otherwise display error
+#If mode is 2, set difficulty to an empty string
 #Return the mode and difficulty
         pass
 
