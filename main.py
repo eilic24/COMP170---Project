@@ -29,7 +29,14 @@ def mode_menu() -> tuple[int, str]:
                 print("Please enter 1 or 2")
                 mode = input("Mode ( 1 = single-player, 2 = two-player): ").strip()
         return int(mode)
-
+def difficulty_menu() -> str: 
+        """Ask until easy or normal difficulty is selected."""
+        difficulty = input("Difficulty (easy/normal): ").strip().lower()
+        while difficulty != "easy" and difficulty != "normal":
+                print("Please enter easy or normal.")
+                difficulty = input("Difficulty (easy/normal): ").strip().lower()
+        return difficulty
+                
 def play_again() -> bool:
         """Ask to play again, no parameters and returns true to play again or false to quit"""
 #Repeat till valid input, ask to play again (yes or no), if yes then return True, if no then return False, otherwise display error
