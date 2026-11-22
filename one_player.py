@@ -29,7 +29,14 @@ def guess(guessed_letters: list[str]) -> str:
         """Ask for letter/word and displey if present or invlaid/repeated guess, parameters guessed_letters in the string list of previously guessed letters, returns a valid new lowecase letter or whole word guess"""
 #Repeat asking for letter/whole word guess and remove spaces/convert to lowercase, if empty/uses character outside a-z display invalid input, otherwise if guess already made display repeated guess, otherwise return the guess
 #If the guess is incorrect then isntant loss
-        pass
+        user_guess = input("Guess a letter or the whole word: ").strip().lower()
+        while not valid_word(user_guess) or user_guess in guessed_letters:
+                if not valid_word(user_guess):
+                        print("Please enter letters a-z only, with no spaces.")
+                else: 
+                        print("You have already guessed that. Try again.")
+                        user_guess = input("Guess a letter or the whole word: ").strip().lower()
+        return user_guess
 
 def display(secret_word: str, guessed_letters: list[str], mistakes: int, reveal_word: bool = False) -> None:
         """Goes through letter to see if it is in word with output of letter, paramters is the string of secret_word that is being guessed, the list of string for the guessed_letters of previously guessed letters, mistakes as an integer of number of incorrect guessed (0-6), and the reveal_word as a boolean to show the full word if True, no returns"""
@@ -41,7 +48,12 @@ def display(secret_word: str, guessed_letters: list[str], mistakes: int, reveal_
 def check_win(secret_word: str, guessed_letters: list[str],) -> bool:
         """Checks if it is a win of all the letters guessed or if the word was guessed, parameters are the string of the secret_word being guessed, the guessed_letters as a string in a list of previously guessed letters, returns the boolean True if the player won, otherwise is False"""
 #If the secret_word is guessed return True and for each letter in secret_word if the letter is in the guessed_letters return True, otherwise return False
-        pass
+        won = True 
+        if secret_word not in guessed_letters: 
+                for letter in secret_word: 
+                        if letter not in guessed_letters:
+                                won = False
+        return won
 
 def play(secret_word: str, won: bool) -> None:
         """Go through guesses and see if they are correct/incorrect and updates guess list and hangman drawing, parameter is the secret_word as a string that is the lowercase word being guessed, returns none"""
