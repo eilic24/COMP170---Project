@@ -5,6 +5,15 @@ import random
 
 #Drawing ASCII: have seven drawings for each mistake and outputs when mistake is done
 
+
+def valid_word(word: str) -> bool: 
+        """Return whether word contains only lowercase letters a through z."""
+        valid = len(word) > 0 
+        for letter in word: 
+                if letter not in "abcdefghijklmnopqrstuvwxyz":
+                        valid = False 
+        return valid
+        
 def get_word(difficulty: str) -> str:
         """Create lists based on difficulty options, parameters are the difficulty modes: "easy" or "normal", the return is a random word from the difficulty group"""
 #Create a list of easy words and normal words
