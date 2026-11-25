@@ -19,5 +19,5 @@ def two_player() -> None:
         """Use the player 1 play style, no parameter, no returns"""
 #Get the secret word using the word_to_guess() and tell player 2 to begin guessing, call play(secret_word)
         secret_word = word_to_guess()
-        print("Player 2, you can begn guessing!")
+        print("Player 2, you can begin guessing!")
         play(secret_word)
