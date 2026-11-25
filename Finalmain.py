@@ -12,7 +12,7 @@ def instructions() -> None:
 #Wrong guesses adds limbs to the drawing, and 6 wrongs lose, while repeated/invalid guessses dont count
         print("""Welcome to Hang In There! By Scaly Syntax
 The game is hangman, choose whether you want single-player or two-player mode.
-Then choose your level - easy or regular.
+Then choose your level - easy or hard.
 Then a blank word with spaces will pop up.
 Type your letter guess into the console and watch the drawing window.
 If incorrect, your guess will add another limb.
@@ -47,13 +47,14 @@ def play_again() -> bool:
 
 def difficulty_menu() -> str:
         """Return either easy or normal difficulty
-        Ask user for input and accept only easy or hard
+        Ask user for input and accept only easy or normal
         Return the difficulty"""
         difficulty = input("Choose a difficulty: easy or hard: ")
         while difficulty != "easy" and difficulty != "hard":
                 print("Enter either easy or hard")
                 difficulty = input("Choose a difficulty: easy or hard: ")
         return difficulty
+
 def main() -> None:
         """Calls everything, no parameters and no returns"""
 #Call instructions(), repeat till valid: get mode and difficulty from mode_menu(), mode 1 = single_player(difficulty), otherwise mode 2 = two_player(difficulty), if play_again is False exit the loop
