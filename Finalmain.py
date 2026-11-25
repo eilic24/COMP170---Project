@@ -47,12 +47,12 @@ def play_again() -> bool:
 
 def difficulty_menu() -> str:
         """Return either easy or normal difficulty
-        Ask user for input and accept only easy or normal
+        Ask user for input and accept only easy or hard
         Return the difficulty"""
-        difficulty = input("Choose a difficulty: easy or normal: ")
-        while difficulty != "easy" and difficulty != "normal":
-                print("Enter either easy or normal")
-                difficulty = input("Choose a difficulty: easy or normal: ")
+        difficulty = input("Choose a difficulty: easy or hard: ")
+        while difficulty != "easy" and difficulty != "hard":
+                print("Enter either easy or hard")
+                difficulty = input("Choose a difficulty: easy or hard: ")
         return difficulty
 def main() -> None:
         """Calls everything, no parameters and no returns"""
