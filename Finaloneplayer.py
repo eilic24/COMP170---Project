@@ -58,6 +58,15 @@ hangman = [
      /    |
           |
     =========
+    """,
+    r"""
+      -----
+      |   |
+      O   |
+     /|\  |
+     / \  |
+          |
+    =========
     """
 ]
 
@@ -89,7 +98,6 @@ def get_word(difficulty: str) -> str:
 def single_player(difficulty: str) -> None:
         secret_word = get_word(difficulty)
         play(secret_word)
-
 def guess(guessed_letters: list[str]) -> str:
         """Ask for letter/word and displey if present or invlaid/repeated guess, parameters guessed_letters in the string list of previously guessed letters and guessed_words in the string list of previously guessed whole words, returns a valid new lowecase letter or whole word guess"""
 #Repeat asking for letter/whole word guess and remove spaces/convert to lowercase, if empty/uses character outside a-z display invalid input, otherwise if guess already made display repeated guess, otherwise return the guess
@@ -166,4 +174,3 @@ def play(secret_word: str) -> None:
                 print("You win!")
         else:
                 print("You lose! The word was: ", secret_word)
-            
