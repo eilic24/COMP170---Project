@@ -24,26 +24,26 @@ def mode_menu() -> tuple[int, str]:
 #If mode is 1, Repeat until valid difficulty is entered (easy ornormal),  remove spaces/convert to lowercase and if valid store and exit loop, otherwise display error
 #If mode is 2, set difficulty to an empty string
 #Return the mode and difficulty
-        mode = input("Mode (1 = single-player, 2 = two-player): ").strip()
+        mode = input("Mode (1 = single-player, 2 = two-player): ")
         while mode != "1" and mode != "2": 
                 print("Please enter 1 or 2")
-                mode = input("Mode ( 1 = single-player, 2 = two-player): ").strip()
+                mode = input("Mode ( 1 = single-player, 2 = two-player): ")
         return int(mode)
 def difficulty_menu() -> str: 
         """Ask until easy or normal difficulty is selected."""
-        difficulty = input("Difficulty (easy/normal): ").strip().lower()
+        difficulty = input("Difficulty (easy/normal): ")
         while difficulty != "easy" and difficulty != "normal":
                 print("Please enter easy or normal.")
-                difficulty = input("Difficulty (easy/normal): ").strip().lower()
+                difficulty = input("Difficulty (easy/normal): ")
         return difficulty
                 
 def play_again() -> bool:
         """Ask to play again, no parameters and returns true to play again or false to quit"""
 #Repeat till valid input, ask to play again (yes or no), if yes then return True, if no then return False, otherwise display error
-        answer = input("Play again? (yes/no): ").strip().lower()
+        answer = input("Play again? (yes/no): ")
         while answer != "yes" and answer != "no":
                 print("Please enter yes or no")
-                answer = input("Play again? (yes/no): ").strip().lower()
+                answer = input("Play again? (yes/no): ")
         return answer == "yes"
 
 def main() -> None:
