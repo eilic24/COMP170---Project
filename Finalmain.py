@@ -1,10 +1,8 @@
 #Hangman code
 #Program structure
 
-#Import turtle for ASCII
-import turtle
-
-from player1 import single_player
+#For one player mode: python3 -m pip install random-word
+from one_player import single_player
 from multiplayer import two_player
 
 def instructions() -> None:
@@ -32,11 +30,11 @@ def mode_menu() -> int:
 #Repeat until valid mode is entered (1: single player, 2: two-player), if valid store as integer and exit loop, otherwise display error
 #Repeat until valid difficulty is entered (easy ornormal),remove spaces/convert to lowercase and if valid store and exit loop, otherwise display error
 #Return the mode and difficulty
-        mode = int(input("Enter your desired mode: 1 = single-player, 2 = two-player: "))
-        while mode != 1 and mode != 2:
+        mode = input("Enter your desired mode: 1 = single-player, 2 = two-player: ")
+        while mode != "1" and mode != "2":
                 print("Enter either 1 or 2")
-                mode = int(input("Enter your desired mode: 1 = single-player, 2 = two-player: "))
-        return mode
+                mode = input("Enter your desired mode: 1 = single-player, 2 = two-player: ")
+        return int(mode)
 
 def play_again() -> bool:
         """Ask to play again, no parameters and returns true to play again or false to quit"""
@@ -46,16 +44,16 @@ def play_again() -> bool:
                 print("Enter either y or n")
                 again = input("Play again? (y/n): ")
         return again == "y"
+
 def difficulty_menu() -> str:
         """Return either easy or normal difficulty
         Ask user for input and accept only easy or normal
         Return the difficulty"""
-        difficulty = input("Choose a difficulty: easy or normal")
+        difficulty = input("Choose a difficulty: easy or normal: ")
         while difficulty != "easy" and difficulty != "normal":
                 print("Enter either easy or normal")
-                difficulty = input("Choose a difficulty: easy or normal")
+                difficulty = input("Choose a difficulty: easy or normal: ")
         return difficulty
-
 def main() -> None:
         """Calls everything, no parameters and no returns"""
 #Call instructions(), repeat till valid: get mode and difficulty from mode_menu(), mode 1 = single_player(difficulty), otherwise mode 2 = two_player(difficulty), if play_again is False exit the loop
