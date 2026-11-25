@@ -1,9 +1,37 @@
-#One player
-#Program Structure
+# COMP 170 Final Project
+# Assignment: Hang In There! Hangman Project - Single Player Mode
+# Name and Loyola ID/email: Ela Ilic (00001662221) and Emujin Otgonbayar (00001767505)
+# Date: November 24, 2026
+#
+# DESCRIPTION:
+# Select a single-player secret word and run a console Hangman round (round function is also reused by two-player mode)
+#
+# QUESTIONS:
+# None
+#
+# PROBLEM ANALYSIS & KEY ISSUES:
+# A repeated or invalid guess must not use an attempt, so guesses must be validated before updating the round.
+#
+# PROGRAM PSEUDOCODE:
+# When single_player is called: get the secret word using get_word and pass the secret word to play.
+# When play is called by either mode create an empty guess history and set mistakes to zero, and while fewer than six mistakes have been made and no win exists: display the current round, get a valid new guess and record the guess, then apply the letter/whole word guessing rule. Finally, reveal the final word and display the result.
+#
+# FUNCTIONS:
+# valid_word: Check whether text contains only lowercase letters
+# read_words: Load words from a text file
+# normal_words: Obtain a word from the random-word package
+# get_word: Select a secret word for the chosen difficulty
+# single_player: Coordinate a single-player round
+# guess: Obtain a valid new guess
+# display: Display the current round
+# check_win: Determine whether the word has been solved
+# play: Play/go through one Hangman round
 
 import random
 
 max_mistakes = 6
+
+#ASCII Drawings Used
 hangman = [
     r"""
       -----
@@ -67,10 +95,18 @@ hangman = [
      / \  |
           |
     =========
-    """
+        """
 ]
 
+
 def valid_word(word: str) -> bool:
+        """Determine whether text is a nonempty lowercase alphabetic word.
+        Parameters: word: the text to check
+        Preconditions: word is a string.
+        Returns True if every character is a lowercase letter a-z and the string is not empty; otherwise False.
+        Postconditions: The original text is unchanged.
+        Steps: If the word is empty, return False, examine each character and if a character is outside a-z, return False. Return True after all characters pass.
+        """
         if len(word) == 0:
                 return False
         for letter in word:
@@ -78,29 +114,67 @@ def valid_word(word: str) -> bool:
                         return False
         return True
 
+
 def read_words(filename: str) -> list[str]:
+        """Load the lines of a word-list file.
+        Parameters: filename: the name or location of the text file.
+        Preconditions: The file exists and is readable.
+        Returns a list containing the file's lines without line endings.
+        Postconditions: The file is closed after reading.
+        Steps: open the file, read its contents and separate them into lines, close the file. Return the list.
+        """
         with open(filename) as file:
                 words = file.read().splitlines()
         return words
 
+
 def normal_words() -> str:
+        """Get a secret word from the random-word package.
+        Parameters None
+        Preconditions: The random-word package is installed and its generator successfully supplies a lowercase word.
+        Returns the generated word.
+        Postconditions: A generated word has been returned.
+        Steps: Import RandomWords and create a word generator. Request and return one random word.
+        """
         from random_word import RandomWords
         generate = RandomWords()
         return generate.get_random_word()
 
 def get_word(difficulty: str) -> str:
+        """Select a secret word for the chosen difficulty.
+        Parameters:difficulty: Either "easy" or "hard".
+        Preconditions: For easy mode, easy_words.txt is readable and contains at least one valid lowercase word. For hard mode, normal_words can supply a valid word.
+        Returns the selected secret word.
+        Postconditions: A word has been selected for the round.
+        Steps: If the difficulty is easy: Load easy_words.txt using read_words and randomly select and return one listed word. Otherwise: Return a word from normal_words.
+        """
         if difficulty == "easy":
                 words = read_words("easy_words.txt")
                 return random.choice(words)
         else:
                 return normal_words()
 
+
 def single_player(difficulty: str) -> None:
+        """Go through one single-player round.
+        Parameters: difficulty: Either "easy" or "hard".
+        Preconditions: The selected word source is available.
+        Returns None.
+        Postconditions: One single-player round has finished.
+        Steps: Obtain a secret word using get_word and call play with that word.
+        """
         secret_word = get_word(difficulty)
         play(secret_word)
+
+
 def guess(guessed_letters: list[str]) -> str:
-        """Ask for letter/word and displey if present or invlaid/repeated guess, parameters guessed_letters in the string list of previously guessed letters and guessed_words in the string list of previously guessed whole words, returns a valid new lowecase letter or whole word guess"""
-#Repeat asking for letter/whole word guess and remove spaces/convert to lowercase, if empty/uses character outside a-z display invalid input, otherwise if guess already made display repeated guess, otherwise return the guess
+        """Get a valid guess that has not already been made.
+        Parameters: guessed_letters: previously accepted letter and word guesses.
+        Preconditions: The player user inputs into console input.
+        Returns a nonempty lowercase a-z guess absent from the history.
+        Postconditions: The guess history is unchanged.
+        Steps: ask for a letter or whole-word guess. While the guess is invalid or already recorded: explain the input problem and ask again. Return the valid new guess.
+        """
         user_guess = input("Guess a letter or the whole word: ")
         while not valid_word(user_guess) or user_guess in guessed_letters:
                 if not valid_word(user_guess):
@@ -111,10 +185,16 @@ def guess(guessed_letters: list[str]) -> str:
         return user_guess
 
 def display(secret_word: str, guessed_letters: list[str], mistakes: int, reveal_word: bool = False) -> None:
-        """Goes through letter to see if it is in word with output of letter, paramters is the string of secret_word that is being guessed, the list of string for the guessed_letters of previously guessed letters, the guessed_words as a list of strings for the guessed whole words, mistakes as an integer of number of incorrect guessed (0-6), and the reveal_word as a boolean to show the full word if True, no returns"""
-#print the hangman[mistakes]
-#For each letter in secret_word if the letter was guessed/reveal_word = True, show the letter otherwise just show an underscore, need to pint spaces between the displayed characters
-#Print previously guessed letters and words and the remaining guesses (6- mistakes already made)
+        """Display the current state of a Hangman round.
+        Parameters: secret_word: the lowercase word being guessed,
+                guessed_letters: previously accepted letter and word guesses,
+                mistakes: the number of mistakes, from zero through six,
+                reveal_word: whether to show every letter
+        Preconditions: mistakes is a valid index in the drawing list.
+        Returns None
+        Postconditions: The round state has been printed without changes to the secret word, history, or mistake count.
+        Steps: display the drawing for the mistake count and build the displayed word one character at a time. Show a letter if guessed or if reveal_word is true. Otherwise, show an underscore. Display the word, guess history, and remaining attempts.
+        """
         print(hangman[mistakes])
         shown_word = ""
         for letter in secret_word:
@@ -132,9 +212,16 @@ def display(secret_word: str, guessed_letters: list[str], mistakes: int, reveal_
                 print()
         print("Remaining guesses: ", max_mistakes - mistakes)
 
+
 def check_win(secret_word: str, guessed_letters: list[str]) -> bool:
-        """Checks if it is a win of all the letters guessed or if the word was guessed, parameters are the string of the secret_word being guessed, the guessed_letters as a string in a list of previously guessed letters, and guessed_words in a string list of previously guessed whole words, returns the boolean True if the player won, otherwise is False"""
-#If the secret_word is in guessed_words return True and for each letter in secret_word if the letter is in the guessed_letters return True, otherwise return False
+        """Determine whether the secret word has been solved.
+        Parameters: secret_word: the nonempty lowercase word being guessed,
+                guessed_letters: previously accepted letter and word guesses.
+        Preconditions: The secret word contains only letters a-z.
+        Returns: true if the whole word or all its letters were guessed; otherwise False.
+        Postconditions: The word and guess history are unchanged.
+        Steps: If the whole word is in the history, return True. Examine each letter in the secret word and if any letter is absent from the history, return False. Return True when every letter has been guessed.
+        """
         if secret_word in guessed_letters:
                 return True
         for letter in secret_word:
@@ -143,14 +230,13 @@ def check_win(secret_word: str, guessed_letters: list[str]) -> bool:
         return True
 
 def play(secret_word: str) -> None:
-        """Go through guesses and see if they are correct/incorrect and updates guess list and hangman drawing, parameter is the secret_word as a string that is the lowercase word being guessed, returns none"""
-#Create empty guessed_letters and guessed_words lists and set mistakes to 0
-#While the mistakes are less than 6, call display() with the current game and get a new guess()
-#If the guess is one letter, add it to the guessed_letters and check if it appears in the secret_word, otherwise add it to the guessed words and see if it equals the secret_word
-#If the guess is correct show the correct guess letter/where/and the message correct, otheriwse increase the mistake by 1 and add to the guessed, diaplay the incorrect guess message
-#If check_win() is True then exit the loop
-#Class display() with reveal_word = True and if check_win() is True then say you win, otherwise display a you lose and the correct secret_word
-        """Run a round till player wins/loses"""
+        """Coordinate one Hangman round.
+        Parameters: secret_word: the nonempty lowercase word to be guessed
+        Preconditions: The word contains only letters a-z.
+        Returns None
+        Postconditions: The round has ended with a win or loss, and the final word and result have been displayed.
+        Steps: create an empty guess history and set mistakes to zero. While mistakes are below the limit and the word is unsolved: display the current round and obtain and record a valid new guess. If the guess has one letter: report whether the letter is in the word and add one mistake if it is absent. Otherwise: report whether the whole word is correct and set mistakes to the limit if the word is incorrect. Display the final round with the word revealed and display a win or loss message.
+        """
         guessed_letters: list[str] = []
         mistakes = 0
         while mistakes < max_mistakes and not check_win(secret_word, guessed_letters):
