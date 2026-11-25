@@ -3,6 +3,14 @@
 from getpass import getpass
 from one_player import play
 
+def valid_word(word: str) -> bool:
+        """Return whether word contains only lowercase letters a through z."""
+        valid = len(word) > 0
+        for letter in word:
+                if letter not in "abcdefghijklmnopqrstuvwxyz":
+                        valid = False
+        return valid
+
 def word_to_guess() -> str:
         """Ask for word from the two player and determines whether valid/invalid
  input, no parameters, returns a string that is a valid lowercase secret word cho
